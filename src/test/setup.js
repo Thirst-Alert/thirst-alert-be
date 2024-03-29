@@ -16,6 +16,11 @@ module.exports = async function (_globalConfig, _projectConfig) {
 		}
 	})
 		.then((mongod) => {
+			// gcs credentials
+			process.env['GCS_CREDENTIALS'] = JSON.stringify({
+				client_email: 'dummy_email@email.com',
+				private_key: 'dummy_key'
+			})
 			global.mongod = mongod
 			process.env['MONGO_URI'] = mongod.getUri()
 			const config = require('../config')
