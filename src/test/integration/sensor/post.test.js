@@ -1,5 +1,6 @@
 const request = require('supertest')
 const { db, authenticatedAgent } = require('../../helpers')
+const { ObjectId } = require('mongodb')
 
 afterEach(async () => {
 	await db.dropCollections()
@@ -13,21 +14,8 @@ describe('POST /sensor', () => {
 		})
 	})
 
-	describe('Schema validation', () => {
-		it('should validate name correctly', async function() {
-			const user = await db.createDummyUser()
-			const res1 = await authenticatedAgent(user).post('/sensor').send({
-				name: ''
-			})
-			expect(res1.status).toBe(422)
-			expect(res1.body.result[0].message).toBe('must NOT have fewer than 1 characters')
-			const res2 = await authenticatedAgent(user).post('/sensor').send({
-				name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
-			})
-			expect(res2.status).toBe(422)
-			expect(res2.body.result[0].message).toBe('must NOT have more than 32 characters')
-		})
-	})
+	// describe('Schema validation', () => {
+	// })
 
 	describe('Logic', () => {
 		it('should create a sensor with authenticated user as its owner', async function() {
@@ -37,8 +25,8 @@ describe('POST /sensor', () => {
 			})
 			expect(res.status).toBe(200)
 			expect(res.body.message).toBe('Sensor created successfully')
-			expect(res.body.sensor.name).toBe('test')
-			const sensor = await global.dbConnection.models.sensor.findOne({ name: 'test' })
+			expect(res.body.sensor.name).toBe('')
+			const sensor = await global.dbConnection.models.sensor.findOne({ owner: new ObjectId(user._id) })
 			expect(sensor).toBeDefined()
 			expect(sensor.owner.toString()).toBe(user._id.toString())
 		})

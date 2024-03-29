@@ -13,19 +13,19 @@ mongoose.connection.once('open', async () => {
 
 	const users = await User.create([
 		{
-			username: 'Massi',
+			username: 'massi',
 			password: 'Massi',
 			email: 'massi@thirst-alert.com',
 			active: true
 		},
 		{
-			username: 'Alsje',
+			username: 'alsje',
 			password: 'Alsje',
 			email: 'alsje@thirst-alert.com',
 			active: true
 		},
 		{
-			username: 'Maya',
+			username: 'maya',
 			password: 'Maya',
 			email: 'mayonnaise@thirst-alert.com',
 			active: true

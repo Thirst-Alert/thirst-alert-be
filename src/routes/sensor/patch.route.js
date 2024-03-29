@@ -12,12 +12,12 @@ module.exports.patch = {
 				name: {
 					type: 'string',
 					minLength: 1,
-					maxLength: 32
+					maxLength: 18
+				},
+				thirstLevel: {
+					type: 'integer',
+					enum: [0, 1, 2]
 				}
-				// img: {
-				//   type: 'string',
-				//   format: 'binary'
-				// }
 			},
 		},
 		params: {
