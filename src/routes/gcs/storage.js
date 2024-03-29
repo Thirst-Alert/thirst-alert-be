@@ -3,7 +3,7 @@ const { Storage } = require('@google-cloud/storage')
 const storage = new Storage({
 	projectId: 'thirst-alert-app',
 	...process.env.NODE_ENV === 'local' && {keyFilename: 'key.json'},
-  ...process.env.NODE_ENV !== 'local' && {credentials: JSON.parse(process.env.GCS_CREDENTIALS)}
+	...process.env.NODE_ENV !== 'local' && {credentials: JSON.parse(process.env.GCS_CREDENTIALS)}
 })
 
 const GET_EXPIRES_IN_SECONDS = 60
