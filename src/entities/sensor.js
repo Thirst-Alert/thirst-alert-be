@@ -4,22 +4,23 @@ const { Schema } = mongoose
 const sensorSchema = new Schema({
 	name: {
 		type: String,
-		minlength: 1,
-		maxlength: 32,
+		maxlength: 18,
 		trim: true,
-		required: true
+		default: ''
 	},
 	owner: {
 		type: Schema.Types.ObjectId,
-		ref: 'user'
+		ref: 'user',
+		required: true
 	},
 	active: {
 		type: Boolean,
 		default: true
 	},
-	img: {
-		type: Buffer,
-		required: false
+	thirstLevel: {
+		type: Schema.Types.Number,
+		enum: [ 0, 1, 2 ],
+		default: 1
 	}
 }, {
 	collection: 'sensor',
@@ -30,7 +31,7 @@ const sensorSchema = new Schema({
 				id: this._id,
 				name: this.name,
 				active: this.active,
-				img: this.img || []
+				thirstLevel: this.thirstLevel
 			}
 		}
 	}

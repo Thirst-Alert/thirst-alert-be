@@ -32,7 +32,7 @@ describe('PATCH /sensor/:sensorId', () => {
 				name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
 			})
 			expect(res2.status).toBe(422)
-			expect(res2.body.result[0].message).toBe('must NOT have more than 32 characters')
+			expect(res2.body.result[0].message).toBe('must NOT have more than 18 characters')
 		})
 	})
 
