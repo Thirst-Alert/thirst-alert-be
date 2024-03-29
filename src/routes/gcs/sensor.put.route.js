@@ -32,7 +32,7 @@ module.exports.put = {
 		const url = await signPutURL(`${owner}-${sensorId}`)
 
 		res.status(200).send({
-			message: 'GET URL signed successfully',
+			message: 'PUT URL signed successfully',
 			url
 		})
 	}
