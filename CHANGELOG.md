@@ -1,3 +1,12 @@
+# [1.3.0-dev.5](https://github.com/thirst-alert/thirst-alert-be/compare/v1.3.0-dev.4...v1.3.0-dev.5) (2024-03-29)
+
+
+### Bug Fixes
+
+* 🐛 fixed linting ([b14f6b9](https://github.com/thirst-alert/thirst-alert-be/commit/b14f6b9113f78283d9dab16596eb5aaf4faf1c2f))
+* 🐛 OH MY DAYS ([9194119](https://github.com/thirst-alert/thirst-alert-be/commit/9194119b70cb33ed34bb3e655c7d1c9fba0bcd1d))
+* 🐛 use gcs secret if env is not local ([2564854](https://github.com/thirst-alert/thirst-alert-be/commit/2564854f4d628176325050a0d0de1a4a41b43141))
+
 # [1.3.0-dev.4](https://github.com/thirst-alert/thirst-alert-be/compare/v1.3.0-dev.3...v1.3.0-dev.4) (2024-03-29)
 
 
