@@ -1,3 +1,10 @@
+# [1.3.0-dev.4](https://github.com/thirst-alert/thirst-alert-be/compare/v1.3.0-dev.3...v1.3.0-dev.4) (2024-03-29)
+
+
+### Features
+
+* 🎸 finished up sensors ([24ca22b](https://github.com/thirst-alert/thirst-alert-be/commit/24ca22bb7a3f0c3850ccb570a58b64df1d7349c1))
+
 # [1.3.0-dev.3](https://github.com/thirst-alert/thirst-alert-be/compare/v1.3.0-dev.2...v1.3.0-dev.3) (2024-03-20)
 
 
