@@ -17,6 +17,9 @@ module.exports.patch = {
 				thirstLevel: {
 					type: 'integer',
 					enum: [0, 1, 2]
+				},
+				hasCustomImage: {
+					type: 'boolean'
 				}
 			},
 		},

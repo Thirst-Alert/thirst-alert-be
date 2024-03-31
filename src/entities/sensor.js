@@ -21,6 +21,10 @@ const sensorSchema = new Schema({
 		type: Schema.Types.Number,
 		enum: [ 0, 1, 2 ],
 		default: 1
+	},
+	hasCustomImage: {
+		type: Boolean,
+		default: false
 	}
 }, {
 	collection: 'sensor',
