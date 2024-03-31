@@ -1,3 +1,10 @@
+# [1.3.0-dev.6](https://github.com/thirst-alert/thirst-alert-be/compare/v1.3.0-dev.5...v1.3.0-dev.6) (2024-03-31)
+
+
+### Features
+
+* 🎸 added hasCustomImage field to sensor ([c5a763f](https://github.com/thirst-alert/thirst-alert-be/commit/c5a763fa44f66a2b1bcc81ec78edb2afcb9b5b2b))
+
 # [1.3.0-dev.5](https://github.com/thirst-alert/thirst-alert-be/compare/v1.3.0-dev.4...v1.3.0-dev.5) (2024-03-29)
 
 
