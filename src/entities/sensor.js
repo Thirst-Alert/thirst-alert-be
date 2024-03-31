@@ -36,7 +36,7 @@ const sensorSchema = new Schema({
 				name: this.name,
 				active: this.active,
 				thirstLevel: this.thirstLevel,
-        hasCustomImage: this.hasCustomImage
+				hasCustomImage: this.hasCustomImage
 			}
 		}
 	}
