@@ -1,3 +1,11 @@
+# [1.3.0-dev.7](https://github.com/thirst-alert/thirst-alert-be/compare/v1.3.0-dev.6...v1.3.0-dev.7) (2024-03-31)
+
+
+### Bug Fixes
+
+* 🐛 linting issue ([81262a2](https://github.com/thirst-alert/thirst-alert-be/commit/81262a207dcc04a2815e49c3cafaa3f3c732aebe))
+* 🐛 serialize hasCustomImage toJSON ([b4e6d66](https://github.com/thirst-alert/thirst-alert-be/commit/b4e6d66493af9631b7f6b7770b62617a70c13118))
+
 # [1.3.0-dev.6](https://github.com/thirst-alert/thirst-alert-be/compare/v1.3.0-dev.5...v1.3.0-dev.6) (2024-03-31)
 
 
