@@ -34,7 +34,7 @@ app.use(router)
 app.use(noPathHandler)
 app.use(errorHandler)
 
-const httpServer = app.listen(server.port, () => {
+const httpServer = app.listen(server.port, '0.0.0.0', () => {
 	if (process.env.NODE_ENV === 'local') console.log(`Server is running at http://localhost:${server.port}`)
 })
 

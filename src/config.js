@@ -29,14 +29,15 @@ const hbsOptions = {
 transport.use('compile', hbs(hbsOptions))
 
 module.exports = {
-	server: {
-		baseUrl: process.env.BASE_URL,
-		port: process.env.PORT || 3000,
-	},
-	mongo: {
-		uri: process.env.NODE_ENV === 'local'
-			? `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@127.0.0.1:27017/${process.env.MONGO_DB}?replicaSet=rs0`
-			: process.env.MONGO_URI,
-	},
-	mailer: transport
-}
+  server: {
+    baseUrl: process.env.BASE_URL,
+    port: process.env.PORT || 3000,
+  },
+  mongo: {
+   // uri: "mongodb://ta-dev:6vplssi5a16Oi4We@localhost:27017/ta-dev?replicaSet=rs0",
+    uri: process.env.NODE_ENV === 'local'
+    	? `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@127.0.0.1:27017/${process.env.MONGO_DB}?replicaSet=rs0`
+    	: process.env.MONGO_URI,
+  },
+  mailer: transport,
+};
