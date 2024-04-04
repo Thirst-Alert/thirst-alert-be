@@ -1,5 +1,6 @@
 const Measurement = require('../../entities/measurement')
 const Sensor = require('../../entities/sensor')
+const { subMonths, subWeeks } = require('date-fns')
 
 module.exports.get = {
 	method: 'GET',
@@ -19,34 +20,14 @@ module.exports.get = {
 		},
 		querystring: {
 			type: 'object',
-			additionalProperties: true,
+			additionalProperties: false,
+			required: ['view'],
 			properties: {
-				limit: {
-					type: 'integer',
-					minimum: 48, // 1 day
-					maximum: 1536, // 32 (days) * 48 (daily readings)
-					default: 1536,
-				},
-				offset: {
-					type: 'integer',
-					minimum: 0,
-					default: 0,
-				},
-				sort: {
-					type: 'integer',
-					enum: [1, -1],
-					default: 1,
-					// 1 for ascending, -1 for descending
-				},
-				startDate: {
+				view: {
 					type: 'string',
-					format: 'date-time',
+					enum: ['month', 'week'],
 				},
 			},
-		},
-		options: {
-			coerceTypes: true,
-			useDefaults: true,
 		},
 	},
 	handler: async (req, res, next) => {
@@ -54,42 +35,66 @@ module.exports.get = {
 			user: { _id: owner },
 		} = req
 		const { sensorId } = req.params
-		const { limit, offset, sort, startDate } = req.query
+		const { view } = req.query
 
-		const sensor = await Sensor.findOne({ _id: sensorId, owner })
-		if (!sensor) return next(new StatusError('Sensor not found', 404))
+		try {
+			const sensor = await Sensor.findOne({ _id: sensorId, owner })
+			if (!sensor) return next(new StatusError('Sensor not found', 404))
 
-		const measurements = await Measurement.find({
-			'metadata.sensorId': sensorId,
-			...(startDate && { createdAt: { $gte: new Date(startDate) } }),
-		})
-			.sort({ createdAt: sort })
-			.limit(limit)
-			.skip(offset)
-			.exec()
+			const currentDate = new Date()
+			let startDate
 
-		const measurementsByDay = {}
-		measurements.forEach((measurement) => {
-			const createdAt = measurement.createdAt.toISOString().split('T')[0]
-			if (!measurementsByDay[createdAt]) {
-				measurementsByDay[createdAt] = []
+			if (view === 'week') {
+				startDate = subWeeks(currentDate, 1)
+			} else if (view === 'month') {
+				startDate = subMonths(currentDate, 1)
+			} else {
+				throw new Error(
+					'Invalid view parameter. It should be either \'week\' or \'month\'.'
+				)
 			}
-			measurementsByDay[createdAt].push(measurement)
-		})
 
-		const averages = []
-		for (const createdAt in measurementsByDay) {
-			const measurementsOfDay = measurementsByDay[createdAt]
-			const totalMoisture = measurementsOfDay.reduce((sum, measurement) => sum + measurement.moisture, 0)
-			const totalTemperature = measurementsOfDay.reduce((sum, measurement) => sum + measurement.temperature, 0)
-			const moisture = parseFloat((totalMoisture / measurementsOfDay.length).toFixed(2))
-			const temperature = parseFloat((totalTemperature / measurementsOfDay.length).toFixed(2))
-			averages.push({ moisture, temperature, createdAt })
+			const measurements = await Measurement.find({
+				'metadata.sensorId': sensorId,
+				createdAt: { $gte: startDate },
+			})
+
+			const measurementsByDay = {}
+			measurements.forEach((measurement) => {
+				const createdAt = measurement.createdAt.toISOString().split('T')[0]
+				if (!measurementsByDay[createdAt]) {
+					measurementsByDay[createdAt] = []
+				}
+				measurementsByDay[createdAt].push(measurement)
+			})
+
+			const averages = []
+			for (const createdAt in measurementsByDay) {
+				const measurementsOfDay = measurementsByDay[createdAt]
+				const totalMoisture = measurementsOfDay.reduce(
+					(sum, measurement) => sum + measurement.moisture,
+					0
+				)
+				const totalTemperature = measurementsOfDay.reduce(
+					(sum, measurement) => sum + measurement.temperature,
+					0
+				)
+				const moisture = parseFloat(
+					(totalMoisture / measurementsOfDay.length).toFixed(2)
+				)
+				const temperature = parseFloat(
+					(totalTemperature / measurementsOfDay.length).toFixed(2)
+				)
+				averages.push({ moisture, temperature, createdAt })
+			}
+
+			return res.status(200).send({
+				message: 'Measurements fetched successfully',
+				measurements: averages,
+			})
+		} catch (error) {
+			return next(new Error(error.message))
+
 		}
-
-		return res.status(200).send({
-			message: 'Measurements fetched successfully',
-			measurements: averages,
-		})
 	},
 }
