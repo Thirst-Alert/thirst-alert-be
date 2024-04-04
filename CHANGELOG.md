@@ -1,3 +1,10 @@
+# [1.3.0-dev.8](https://github.com/thirst-alert/thirst-alert-be/compare/v1.3.0-dev.7...v1.3.0-dev.8) (2024-04-04)
+
+
+### Bug Fixes
+
+* 🐛 fixed default createdAt for measurement ([ac0bc1f](https://github.com/thirst-alert/thirst-alert-be/commit/ac0bc1fb5631bbe3e06fe8b792b06d7b11c0707e))
+
 # [1.3.0-dev.7](https://github.com/thirst-alert/thirst-alert-be/compare/v1.3.0-dev.6...v1.3.0-dev.7) (2024-03-31)
 
 
