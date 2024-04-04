@@ -12,7 +12,7 @@ const measurementSchema = new Schema({
 	},
 	createdAt: {
 		type: Date,
-		default: Date.now()
+		default: Date.now
 	},
 	metadata: {
 		sensorId: {
