@@ -42,7 +42,7 @@ module.exports.post = {
 			user.toJWTPayload(),
 			process.env.JWT_SECRET,
 			{
-				expiresIn: '1h',
+				expiresIn: process.env.JWT_EXPIRATION_TIME || '1h',
 			}
 		)
 		return res.status(200).send({

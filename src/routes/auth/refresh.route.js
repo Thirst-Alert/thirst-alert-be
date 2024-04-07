@@ -37,7 +37,9 @@ module.exports.post = {
 			const newToken = jwt.sign(
 				refreshTokenDoc.owner.toJWTPayload(),
 				process.env.JWT_SECRET,
-				{ expiresIn: '1h' }
+				{
+					expiresIn: process.env.JWT_EXPIRATION_TIME || '1h'
+				}
 			)
 			res.status(200).send({ message: 'New access token generated', token: newToken })
 		} catch (error) {
