@@ -1,3 +1,10 @@
+# [1.3.0-dev.10](https://github.com/thirst-alert/thirst-alert-be/compare/v1.3.0-dev.9...v1.3.0-dev.10) (2024-04-07)
+
+
+### Bug Fixes
+
+* 🐛 measurement get route returns null values too ([f25cf15](https://github.com/thirst-alert/thirst-alert-be/commit/f25cf15531830c4b68ebe6e2e599b95387b056b3))
+
 # [1.3.0-dev.9](https://github.com/thirst-alert/thirst-alert-be/compare/v1.3.0-dev.8...v1.3.0-dev.9) (2024-04-04)
 
 
