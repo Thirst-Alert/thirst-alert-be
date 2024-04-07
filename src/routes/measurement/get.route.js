@@ -1,6 +1,6 @@
 const Measurement = require('../../entities/measurement')
 const Sensor = require('../../entities/sensor')
-const { subMonths, subWeeks } = require('date-fns')
+const { add, subMonths, subWeeks, eachDayOfInterval } = require('date-fns')
 
 module.exports.get = {
 	method: 'GET',
@@ -41,22 +41,13 @@ module.exports.get = {
 			const sensor = await Sensor.findOne({ _id: sensorId, owner })
 			if (!sensor) return next(new StatusError('Sensor not found', 404))
 
-			const currentDate = new Date()
-			let startDate
-
-			if (view === 'week') {
-				startDate = subWeeks(currentDate, 1)
-			} else if (view === 'month') {
-				startDate = subMonths(currentDate, 1)
-			} else {
-				throw new Error(
-					'Invalid view parameter. It should be either \'week\' or \'month\'.'
-				)
-			}
+			const endDate = add(new Date(), { days: 1 }) // gotta end tomorrow so that interval is inclusive of today
+			const startDate = view === 'week' ? subWeeks(endDate, 1) : subMonths(endDate, 1)
+			const dateRange = eachDayOfInterval({ start: startDate, end: endDate })
 
 			const measurements = await Measurement.find({
 				'metadata.sensorId': sensorId,
-				createdAt: { $gte: startDate },
+				createdAt: { $gte: startDate }
 			})
 
 			const measurementsByDay = {}
@@ -68,33 +59,25 @@ module.exports.get = {
 				measurementsByDay[createdAt].push(measurement)
 			})
 
-			const averages = []
-			for (const createdAt in measurementsByDay) {
-				const measurementsOfDay = measurementsByDay[createdAt]
-				const totalMoisture = measurementsOfDay.reduce(
-					(sum, measurement) => sum + measurement.moisture,
-					0
-				)
-				const totalTemperature = measurementsOfDay.reduce(
-					(sum, measurement) => sum + measurement.temperature,
-					0
-				)
-				const moisture = parseFloat(
-					(totalMoisture / measurementsOfDay.length).toFixed(2)
-				)
-				const temperature = parseFloat(
-					(totalTemperature / measurementsOfDay.length).toFixed(2)
-				)
-				averages.push({ moisture, temperature, createdAt })
-			}
+			const averages = dateRange.map((date) => {
+				const formattedDate = date.toISOString().split('T')[0]
+				const measurementsOfDay = measurementsByDay[formattedDate] || []
+				if (measurementsOfDay.length === 0) {
+					return { moisture: null, temperature: null, createdAt: formattedDate }
+				}
+				const totalMoisture = measurementsOfDay.reduce((sum, measurement) => sum + measurement.moisture, 0)
+				const totalTemperature = measurementsOfDay.reduce((sum, measurement) => sum + measurement.temperature, 0)
+				const moisture = parseFloat((totalMoisture / measurementsOfDay.length).toFixed(2))
+				const temperature = parseFloat((totalTemperature / measurementsOfDay.length).toFixed(2))
+				return { moisture, temperature, createdAt: formattedDate }
+			})
 
 			return res.status(200).send({
 				message: 'Measurements fetched successfully',
 				measurements: averages,
 			})
 		} catch (error) {
-			return next(new Error(error.message))
-
+			next(new StatusError('Something went wrong while fetching measurements', 500))
 		}
 	},
 }
