@@ -6,6 +6,7 @@ const handlebars = require('express-handlebars')
 const { strategy } = require('./middlewares/passport-config')
 const reqLogger = require('./middlewares/reqLogger')
 const { noPathHandler, errorHandler } = require('./middlewares/errors')
+const helmet = require('helmet')
 const { server, mongo } = require('./config')
 
 const app = express()
@@ -27,6 +28,7 @@ if (process.env.NODE_ENV === 'local') {
 
 app.use(express.json())
 app.use(reqLogger)
+app.use(helmet())
 
 const router = require('express').Router()
 require('./routes/routes').attachRoutes(router)
