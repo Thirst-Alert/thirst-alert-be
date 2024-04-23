@@ -1,3 +1,10 @@
+# [1.3.0-dev.11](https://github.com/thirst-alert/thirst-alert-be/compare/v1.3.0-dev.10...v1.3.0-dev.11) (2024-04-23)
+
+
+### Features
+
+* 🎸 Implemented Helmet ([fcaa806](https://github.com/thirst-alert/thirst-alert-be/commit/fcaa806daae81e05bc99bf9a6b93a8d918fc0c46))
+
 # [1.3.0-dev.10](https://github.com/thirst-alert/thirst-alert-be/compare/v1.3.0-dev.9...v1.3.0-dev.10) (2024-04-07)
 
 
