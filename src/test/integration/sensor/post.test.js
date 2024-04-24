@@ -25,7 +25,7 @@ describe('POST /sensor', () => {
 			})
 			expect(res.status).toBe(200)
 			expect(res.body.message).toBe('Sensor created successfully')
-			expect(res.body.sensor.name).toBe('')
+			expect(res.body.sensor.name).toBe('test')
 			const sensor = await global.dbConnection.models.sensor.findOne({ owner: new ObjectId(user._id) })
 			expect(sensor).toBeDefined()
 			expect(sensor.owner.toString()).toBe(user._id.toString())

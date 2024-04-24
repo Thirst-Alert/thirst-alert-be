@@ -4,10 +4,25 @@ module.exports.post = {
 	method: 'POST',
 	path: '/sensor',
 	requiresAuth: true,
+	schema: {
+		body: {
+			type: 'object',
+			additionalProperties: false,
+			properties: {
+				name: {
+					type: 'string',
+					minLength: 1,
+					maxLength: 18
+				}
+			}
+		}
+	},
 	handler: async (req, res, _next) => {
+		const { name } = req.body
 		const { user } = req
 
 		const sensor = await Sensor.create({
+			name: name ?? '',
 			owner: user._id
 		})
 
