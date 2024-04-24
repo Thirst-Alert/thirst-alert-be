@@ -1,3 +1,10 @@
+# [1.3.0-dev.12](https://github.com/thirst-alert/thirst-alert-be/compare/v1.3.0-dev.11...v1.3.0-dev.12) (2024-04-24)
+
+
+### Bug Fixes
+
+* 🐛 re-added name functionality for sensor post ([cdb3701](https://github.com/thirst-alert/thirst-alert-be/commit/cdb3701c82abd3e674aed5f1ba362c69a5e029b1))
+
 # [1.3.0-dev.11](https://github.com/thirst-alert/thirst-alert-be/compare/v1.3.0-dev.10...v1.3.0-dev.11) (2024-04-23)
 
 
