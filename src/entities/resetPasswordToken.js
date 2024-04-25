@@ -21,6 +21,8 @@ const resetPasswordTokenSchema = new Schema({
 	collection: 'resetPasswordToken',
 })
 
+resetPasswordTokenSchema.index({ owner: 1 })
+
 resetPasswordTokenSchema.pre('save', async function(next) {
 	await mongoose.model('resetPasswordToken').deleteMany({ owner: this.owner })
 	next()

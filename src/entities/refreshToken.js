@@ -7,9 +7,14 @@ const refreshTokenSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'user'
 	},
-	expiresAt: Date,
+	expiresAt: {
+		type: Date,
+		expires: 0
+	},
 }, {
 	collection: 'refreshToken',
 })
+
+refreshTokenSchema.index({ token: 1 })
 
 module.exports = mongoose.model('refreshToken', refreshTokenSchema)

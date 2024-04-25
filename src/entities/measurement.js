@@ -39,6 +39,7 @@ const measurementSchema = new Schema({
 	// expireAfterSeconds: 10
 })
 
+measurementSchema.index({ createdAt: 1, 'metadata.sensorId': 1 })
 // measurementSchema.index(
 //   { 'createdAt': 1 },
 //   {

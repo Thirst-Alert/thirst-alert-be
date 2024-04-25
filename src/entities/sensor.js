@@ -42,4 +42,6 @@ const sensorSchema = new Schema({
 	}
 })
 
+sensorSchema.index({ owner: 1 })
+
 module.exports = mongoose.model('sensor', sensorSchema)
